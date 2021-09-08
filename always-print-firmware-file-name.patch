@@ -1,0 +1,25 @@
+From c4258c794db6e61ef74b65dcde2bca3cf8bef6bc Mon Sep 17 00:00:00 2001
+From: Georgy Yakovlev <gyakovlev@gentoo.org>
+Date: Thu, 16 Jul 2020 00:17:52 -0700
+Subject: [PATCH] always print firmware file name
+
+Signed-off-by: Georgy Yakovlev <gyakovlev@gentoo.org>
+---
+ drivers/base/firmware_loader/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index bf44c79..0627fd2 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -763,6 +763,8 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+ 		goto out;
+ 	}
+ 
++	printk(KERN_NOTICE "Loading firmware: %s\n", name);
++
+ 	ret = _request_firmware_prepare(&fw, name, device, buf, size,
+ 					opt_flags);
+ 	if (ret <= 0) /* error or already assigned */
+-- 
+2.27.0

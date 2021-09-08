@@ -1,0 +1,22 @@
+commit 6490984309b84728a74ffd06389f9520ea3c5679
+Author: KARBOWSKI Piotr <piotr.karbowski@gmail.com>
+Date:   2021-09-08 23:57:28 +0200
+
+    swap.c: Use up to 8 instead of 3 CPU threads for LZO compression for hibernation.
+    
+    High core count CPUs are pretty much standard now and it does have
+    significant improvment on the hibernation time even on low power SKUs.
+
+diff --git a/kernel/power/swap.c b/kernel/power/swap.c
+index 3cb89baebc79..14ad52c75b19 100644
+--- a/kernel/power/swap.c
++++ b/kernel/power/swap.c
+@@ -524,7 +524,7 @@ static int swap_writer_finish(struct swap_map_handle *handle,
+ #define LZO_CMP_SIZE	(LZO_CMP_PAGES * PAGE_SIZE)
+ 
+ /* Maximum number of threads for compression/decompression. */
+-#define LZO_THREADS	3
++#define LZO_THREADS	8
+ 
+ /* Minimum/maximum number of pages for read buffering. */
+ #define LZO_MIN_RD_PAGES	1024
